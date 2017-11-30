@@ -15,7 +15,9 @@ class ViewController: UIViewController {
     
     @IBAction func number(_ sender: UIButton) {
         
-        numberString = numberString + String(sender.tag)
+        if numberString.count < 12 {
+          numberString = numberString + String(sender.tag)
+        }
         
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
