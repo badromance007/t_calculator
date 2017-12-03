@@ -14,6 +14,10 @@ class ViewController: UIViewController {
     var numberString:String = ""
     var calString:String = ""
     var tempNumber:String = ""
+    var acIsPressed:Int = 10
+    var divideIsPressed:Int = 13
+    var multiplyIsPressed:Int = 14
+    var subtractIsPressed:Int = 15
     var plusIsPressed:Int = 16
     var equalIsPressed:Int = 17
     
@@ -29,7 +33,10 @@ class ViewController: UIViewController {
         
         
         
-        if ((label.text?.range(of: "+")) != nil) {
+        if (label.text?.range(of: "÷") != nil ||
+            label.text?.range(of: "×") != nil ||
+            label.text?.range(of: "-") != nil ||
+            label.text?.range(of: "+") != nil ) {
             if tempNumber == "" {
                 calString = label.text! + formattedNumber
                 tempNumber = label.text!
@@ -47,9 +54,27 @@ class ViewController: UIViewController {
     }
     
     @IBAction func buttons(_ sender: UIButton) {
-        if sender.tag == 10 {
+        if sender.tag == acIsPressed {
             numberString = ""
             label.text = "0"
+        }
+        
+        if sender.tag == divideIsPressed {
+            label.text = label.text! + " ÷ "
+            numberString = ""
+            tempNumber = ""
+        }
+        
+        if sender.tag == multiplyIsPressed {
+            label.text = label.text! + " × "
+            numberString = ""
+            tempNumber = ""
+        }
+        
+        if sender.tag == subtractIsPressed {
+            label.text = label.text! + " - "
+            numberString = ""
+            tempNumber = ""
         }
         
         if sender.tag == plusIsPressed {
@@ -63,7 +88,12 @@ class ViewController: UIViewController {
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = NumberFormatter.Style.decimal
             
-            let operation = NSExpression(format: label.text!.replacingOccurrences(of: ",",with: "") )
+            label.text = label.text!.replacingOccurrences(of: ",",with: "") // remove "," from calculation
+            label.text = label.text!.replacingOccurrences(of: "÷",with: "/") // change "÷" to "/" from calculation
+            label.text = label.text!.replacingOccurrences(of: "×",with: "*") // change "÷" to "*" from calculation
+            label.text = label.text!.replacingOccurrences(of: "-",with: "-") // change "-" to "-" from calculation
+            
+            let operation = NSExpression(format: label.text! )
             result = (operation.expressionValue(with: nil, context: nil) as? Double)!
             
             
