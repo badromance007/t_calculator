@@ -69,6 +69,7 @@ class ViewController: UIViewController {
             
             let finalResult:String = numberFormatter.string(from: NSNumber(value: result))!
             label.text = String(finalResult)
+            numberString = "" // reset after calculation
         }
     }
     
